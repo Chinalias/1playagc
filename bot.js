@@ -257,29 +257,30 @@ client.on('message', message => {
     });
  
  
+const adminprefix = "1";
+const devs = ['331081268731052042','436856467044302848'];
 client.on('message', message => {
-var prefix = "1";
- 
-  if (!message.content.startsWith(prefix)) return;
-  var args = message.content.split(' ').slice(1);
-  var argresult = args.join(' ');
-  if (message.author.id == '331081268731052042' ) return;
- 
-if (message.content.startsWith(prefix + 'stream')) {
-  client.user.setGame(argresult, "https://www.twitch.tv/baktash_183");
-    message.channel.sendMessage(`**${argresult}** :تم تغيير الحالة الى ستريمنج`)
+  var argresult = message.content.split(` `).slice(1).join(' ');
+    if (!devs.includes(message.author.id)) return;
+    
+if (message.content.startsWith(adminprefix + 'game')) {
+  client.user.setGame(argresult);
+    message.channel.sendMessage(`**${argresult} ** __Done .__  The Bot Game Changed **`)
+} else 
+  if (message.content.startsWith(adminprefix + 'name')) {
+client.user.setUsername(argresult).then
+    message.channel.sendMessage(`**${argresult}** ** __Done .__  The Bot Name Changed **`)
+return message.reply("**لا يمكنك تغيير الاسم يجب عليك الانتظآر لمدة ساعتين . **");
 } else
- 
-if (message.content.startsWith(prefix + 'name')) {
-  client.user.setUsername(argresult).then
-      message.channel.sendMessage(`**${argresult}** : تم تغير الأسم`)
-  return message.reply("**لا تستطيع تغير الأسم الا بعد ساعتين**");
-} else
- 
-if (message.content.startsWith(prefix + 'img')) {
-  client.user.setAvatar(argresult);
-    message.channel.sendMessage(`**${argresult}** : تم تغير صورة البوت`);
+  if (message.content.startsWith(adminprefix + 'avatar')) {
+client.user.setAvatar(argresult);
+  message.channel.sendMessage(`**${argresult}** ** __Done .__  The Bot avatar Changed **`);
+      } else     
+if (message.content.startsWith(adminprefix + 'stream')) {
+  client.user.setGame(argresult, "https://www.twitch.tv/Baktash_183");
+    message.channel.sendMessage(`**  The Bot stream Changed __Done .__ ${argresult}**`)
 }
+
 });
- 
+
 client.login(process.env.BOT_TOKEN);
